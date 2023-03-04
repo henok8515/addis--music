@@ -8,6 +8,6 @@ const {
 const musics = require("../model/musicSchema");
 router.get("/", getMusics);
 router.post("/create", createMusic);
-router.post("/update/", updateMusic);
-router.post("/delete/", deleteMusic);
+router.post("/update", updateMusic);
+router.post("/delete", deleteMusic);
 module.exports = router;

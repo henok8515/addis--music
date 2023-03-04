@@ -1,13 +1,19 @@
-import React from "react";
-import { css } from "@emotion/css";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
-import Header from "./components/Header";
 import NewMusic from "./components/NewMusic";
+
 function App() {
+  const [musics, setMusics] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/")
+      .then((res) => setMusics(res.data))
+      .catch((err) => console.error(err));
+  }, [musics]);
   return (
     <div>
-      <Header />
-      <NewMusic />
+      <NewMusic musics={musics} />
     </div>
   );
 }
