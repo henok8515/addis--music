@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
+import { Button, TextField, Typography } from "@mui/material";
 
 const MusicCard = styled.div`
   margin: 10px 10px;
@@ -20,7 +21,6 @@ const MusicCard = styled.div`
   -moz-box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.75);
   box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.75);
   transition: all 1s ease-in-out;
-
   &:hover {
     transform: scale(1.05);
   }
@@ -30,19 +30,20 @@ const Circe = styled.div`
   width: 150px;
   border-radius: 50%;
   display: flex;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   align-self: center;
-  /* background-image: url("https://i.discogs.com/aG7IGbJKg03ax8ssKvbgaFN7c5kYMTOQ-KTr7Fs72GE/rs:fit/g:sm/q:90/h:341/w:352/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTQ1NDUy/My0xMjk3ODk1NTk5/LmpwZWc.jpeg"); */
+  background-image: url("https://cdn-icons-png.flaticon.com/512/3756/3756763.png");
   background-size: cover;
 `;
 
-function Card({ title, artist, genre, id }) {
+function Card({ title, artist, genre, id, album }) {
   const [editMode, setEditMode] = useState(false);
   const [updatedMusic, setUpdatedMusic] = useState({
     title: title,
     artist: artist,
     genre: genre,
     id: id,
+    album: album,
   });
   const handleDelete = (id) => {
     alert("are you sure you want to delete");
@@ -85,18 +86,20 @@ function Card({ title, artist, genre, id }) {
   return (
     <div>
       <MusicCard>
-        <div
-          className={css`
-            display: flex;
-            width: 100%;
-            justify-content: space-between;
-            cursor: pointer;
-          `}
-        >
-          <GrEdit onClick={() => handleEdit(id)} size={20} />
-          <AiFillDelete onClick={() => handleDelete(id)} size={20} />
-        </div>
-        <Circe />
+        {editMode ? null : (
+          <div
+            className={css`
+              display: flex;
+              width: 100%;
+              justify-content: space-between;
+              cursor: pointer;
+            `}
+          >
+            <GrEdit onClick={() => handleEdit(id)} size={20} />
+            <AiFillDelete onClick={() => handleDelete(id)} size={20} />
+          </div>
+        )}
+        {editMode ? null : <Circe />}
         <div
           className={css`
             text-align: center;
@@ -104,28 +107,83 @@ function Card({ title, artist, genre, id }) {
         >
           {editMode ? (
             <form onSubmit={handleSubmit}>
-              <input
+              <TextField
+                label="artist"
+                variant="standard"
                 name="artist"
                 onChange={handleChange}
+                required
                 value={updatedMusic.artist}
               />
-              <input
+
+              <TextField
+                required
+                label="title"
+                variant="standard"
                 name="title"
                 onChange={handleChange}
                 value={updatedMusic.title}
               />
-              <input
+              <TextField
+                required
+                label="genre"
+                variant="standard"
                 name="genre"
                 onChange={handleChange}
                 value={updatedMusic.genre}
               />
-              <button type="submit">updateMusic</button>
+              <TextField
+                required
+                label="album"
+                variant="standard"
+                name="album"
+                onChange={handleChange}
+                value={updatedMusic.album}
+              />
+              <Button type="submit">updateMusic</Button>
             </form>
           ) : (
             <div>
-              <p>Name :{artist}</p>
-              <p>Genre {genre}</p>
-              <p>Title :{title}</p>
+              <Typography>
+                Name :
+                <span
+                  className={css`
+                    font-weight: 700;
+                  `}
+                >
+                  {artist}
+                </span>
+              </Typography>
+              <Typography>
+                Genre{" "}
+                <span
+                  className={css`
+                    font-weight: 700;
+                  `}
+                >
+                  {genre}
+                </span>
+              </Typography>
+              <Typography>
+                Title :
+                <span
+                  className={css`
+                    font-weight: 700;
+                  `}
+                >
+                  {title}
+                </span>
+              </Typography>
+              <Typography>
+                Album:
+                <span
+                  className={css`
+                    font-weight: 700;
+                  `}
+                >
+                  {album}
+                </span>
+              </Typography>
             </div>
           )}
         </div>

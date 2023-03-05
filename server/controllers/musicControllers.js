@@ -9,6 +9,7 @@ module.exports.createMusic = async (req, res) => {
     title: req.body.title,
     artist: req.body.artist,
     genre: req.body.genre,
+    album: req.body.album,
   });
   try {
     await music.save();
@@ -18,8 +19,8 @@ module.exports.createMusic = async (req, res) => {
   }
 };
 module.exports.updateMusic = async (req, res) => {
-  const { id, title, artist, genre } = req.body;
-  Music.findByIdAndUpdate(id, { title, artist, genre })
+  const { id, title, artist, genre, album } = req.body;
+  Music.findByIdAndUpdate(id, { title, artist, genre, album })
     .then(() => res.json("updated successfully"))
     .catch((err) => {
       res.json(err);
