@@ -13,6 +13,10 @@ const musicSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    album: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,
