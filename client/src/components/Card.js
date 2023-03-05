@@ -5,6 +5,8 @@ import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import { Button, TextField, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { deleteMusicSlice } from "../features/music/musicSlice";
 
 const MusicCard = styled.div`
   margin: 10px 10px;
@@ -45,18 +47,22 @@ function Card({ title, artist, genre, id, album }) {
     id: id,
     album: album,
   });
+
+  const dispatch = useDispatch();
   const handleDelete = (id) => {
     alert("are you sure you want to delete");
-    axios
-      .post("http://localhost:5000/delete", {
-        id: id,
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+
+    dispatch(deleteMusicSlice(id));
+    // axios
+    //   .post("http://localhost:5000/delete", {
+    //     id: id,
+    //   })
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response.data);
+    //   });
   };
   const handleEdit = (id) => {
     console.log(id);
@@ -72,7 +78,6 @@ function Card({ title, artist, genre, id, album }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(updatedMusic, id);
-
     axios
       .post("http://localhost:5000/update", updatedMusic)
       .then((response) => {

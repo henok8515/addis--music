@@ -28,7 +28,7 @@ module.exports.updateMusic = async (req, res) => {
 };
 module.exports.deleteMusic = async (req, res) => {
   const { id } = req.body;
-  console.log(id);
+  console.log(id, "delet it");
   Music.findByIdAndDelete(id)
     .then(() => res.json("Deleted successfully"))
     .catch((err) => {

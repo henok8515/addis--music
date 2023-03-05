@@ -1,18 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react"; 
+import { useSelector } from "react-redux";
 import NewMusic from "./components/NewMusic";
 
 function App() {
-  const [musics, setMusics] = useState([]);
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/")
-      .then((res) => setMusics(res.data))
-      .catch((err) => console.error(err));
-  }, [musics]);
+  const music = useSelector((state) => state.music.music);
   return (
     <div>
-      <NewMusic musics={musics} />
+      <h1>you have a total of {music.length} songs</h1>
+      <NewMusic />
     </div>
   );
 }
