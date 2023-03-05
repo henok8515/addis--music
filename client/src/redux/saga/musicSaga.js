@@ -11,7 +11,7 @@ function* getFetchedMusic() {
   const formattedData = yield music.json();
   yield put(getMusicSuccess(formattedData));
 }
-export function* deleteUserByIdSaga(action) {
+export function* deleteMusicByIdSaga(action) {
   yield deleteMusicByIdAPI(action.id);
   yield put(deleteMusicSlice(action.id));
 }
@@ -22,7 +22,7 @@ export function* updateMusic(action) {
 function* musicSaga() {
   yield takeEvery("music/getMusicFetch", getFetchedMusic);
   yield takeEvery(GET_MUSIC, getFetchedMusic);
-  yield takeEvery(DELETE_MUSIC, deleteMusicByIdAPI);
+  yield takeEvery(DELETE_MUSIC, deleteMusicByIdSaga);
   yield takeEvery(UPDATE_MUSIC, updateMusic);
 }
 export default musicSaga;
