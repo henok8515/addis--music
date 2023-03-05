@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
-// import styled from "@emotion/styled";
-import Select from "react-select";
 import Card from "./Card";
 import axios from "axios";
-// import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Button, TextField, Typography } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { useSelector, useDispatch } from "react-redux";
+import { getMusicFetch } from "../features/music/musicSlice";
 
-const options = [
-  { value: "Rock", label: "Rock" },
-  { value: "Pop music", label: "Pop music" },
-  { value: "Hip hop music", label: "Hip hop music" },
-  { value: "Rhythm and blues", label: "Rhythm and blues" },
-  { value: "Blues", label: "Blues" },
-  { value: "Jazz", label: "Jazz" },
-  { value: "Classical music", label: "Classical music" },
-  { value: "Reggae", label: "Reggae" },
-  { value: "Funk", label: "Funk" },
-];
-function NewMusic({ musics }) {
+function NewMusic() {
   const [creteMode, setCreateMode] = useState(false);
   const [addMusic, setAddMusic] = useState({
     title: "",
@@ -27,13 +15,22 @@ function NewMusic({ musics }) {
     genre: "",
     album: "",
   });
-  useEffect(() => {}, []);
+
   const handleChange = (e) => {
     setAddMusic({
       ...addMusic,
       [e.target.name]: e.target.value,
     });
   };
+  const dispatch = useDispatch();
+  const music = useSelector((state) => state.music.music);
+
+  useEffect(() => {
+    dispatch(getMusicFetch());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [music]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     axios.post();
@@ -45,6 +42,7 @@ function NewMusic({ musics }) {
       genre: "",
       album: "",
     });
+
     axios
       .post("http://localhost:5000/create", {
         title: addMusic.title,
@@ -64,7 +62,7 @@ function NewMusic({ musics }) {
         justify-content: center; ;
       `}
     >
-      {musics.map(({ _id, ...others }) => (
+      {music.map(({ _id, ...others }) => (
         <Card
           setAddMusic={setAddMusic}
           addMusic={addMusic}
