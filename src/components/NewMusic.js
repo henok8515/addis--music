@@ -50,7 +50,7 @@ function NewMusic() {
     });
 
     axios
-      .post("http://localhost:5000/create", {
+      .post("https://addis-music.onrender.com/create", {
         title: addMusic.title,
         artist: addMusic.artist,
         genre: addMusic.genre,
