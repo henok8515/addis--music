@@ -1,7 +1,7 @@
 import { call, put, takeEvery } from "redux-saga/effects";
 import { getMusicSuccess } from "./features/music/musicSlice";
 function* getFetchedMusic() {
-  const music = yield call(() => fetch("http://localhost:5000/"));
+  const music = yield call(() => fetch("https://addis-music.onrender.com"));
   const formattedData = yield music.json();
   yield put(getMusicSuccess(formattedData));
   //   console.log(formattedData, "formattedData");

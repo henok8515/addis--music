@@ -50,7 +50,7 @@ function Card({ title, artist, genre, id, album }) {
     alert("are you sure you want to delete");
 
     axios
-      .post("http://localhost:5000/delete", {
+      .post("https://addis-music.onrender.com/delete", {
         id: id,
       })
       .then((response) => {
@@ -79,7 +79,7 @@ function Card({ title, artist, genre, id, album }) {
     e.preventDefault();
     console.log(updatedMusic, id);
     axios
-      .post("http://localhost:5000/update", updatedMusic)
+      .post("https://addis-music.onrender.com/update", updatedMusic)
       .then((response) => {
         alert(response.data);
         console.log(response.data);

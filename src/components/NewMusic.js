@@ -15,6 +15,7 @@ function NewMusic() {
     genre: "",
     album: "",
   });
+  const [music, setMusic] =useState([])
 
   const handleChange = (e) => {
     setAddMusic({
@@ -23,9 +24,14 @@ function NewMusic() {
     });
   };
   const dispatch = useDispatch();
-  const music = useSelector((state) => state.music.music);
+
+
 
   useEffect(() => {
+    axios.get('https://addis-music.onrender.com/').then((res) => {
+      setMusic(res.data)
+    } )
+  
     dispatch(getMusicFetch());
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

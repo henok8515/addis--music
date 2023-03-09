@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:5000";
+axios.defaults.baseURL = "https://addis-music.onrender.com/";
 
 export const getMusicAPI = async () => axios.get("/");
 
