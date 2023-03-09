@@ -10,7 +10,7 @@ export const musicSlice = createSlice({
       state.music = action.payload;
     },
     deleteMusicSlice: (state, action) => {
-      console.log(state);
+      console.log(action.payload, "id for deleting");
       let f = state.music.splice(action.payload, 1);
       console.log(f);
       return state;

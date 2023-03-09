@@ -12,6 +12,7 @@ function* getFetchedMusic() {
   yield put(getMusicSuccess(formattedData));
 }
 export function* deleteMusicByIdSaga(action) {
+  console.log(action.id, "henio");
   yield deleteMusicByIdAPI(action.id);
   yield put(deleteMusicSlice(action.id));
 }
