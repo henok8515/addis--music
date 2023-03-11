@@ -1,14 +1,17 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://addis-music.onrender.com/";
+axios.defaults.baseURL = "https://addis-music.onrender.com";
+// axios.defaults.baseURL = "http://localhost:5000";
 
-export const getMusicAPI = async () => axios.get("/");
-
-export const createMusicAPI = async (music) => axios.post(`/create`, music);
-
-export const updateMusicAPI = async (data) => axios.post("/update", data);
-
-export const deleteMusicByIdAPI = async (id) => {
-  console.log(id, "api id");
-  return axios.post("/delete", { id });
+export const getMusics = async () => axios.get("/");
+console.log(getMusics());
+export const deleteMusic = async (id) =>
+  axios.post(`/delete`, {
+    id,
+  });
+export const createMusic = async (music) => {
+  axios.post("/create", music);
+  console.log(music, "api musix");
 };
+export const updateMusic = async (id, music) =>
+  axios.post("/update", id, music);

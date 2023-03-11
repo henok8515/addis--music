@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 import axios from "axios";
 import { Button, TextField, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { DELETE_MUSIC, UPDATE_MUSIC } from "../redux/types";
 
 const MusicCard = styled.div`
   margin: 10px 10px;
-  height: 300px;
+  padding: 10px 10px;
   width: 200px;
   border-radius: 10px;
   border: 1px solid black;
@@ -17,10 +19,10 @@ const MusicCard = styled.div`
   justify-content: space-evenly;
   padding: 10px;
   flex-direction: column;
-  -webkit-box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.75);
-  box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.75);
-  transition: all 1s ease-in-out;
+  -webkit-box-shadow: 4px -4px 4px 4px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.55);
+  box-shadow: 5px -4px 8px 4px rgba(0, 0, 0, 0.35);
+  transition: all 200ms ease-in-out;
   &:hover {
     transform: scale(1.05);
   }
@@ -45,25 +47,26 @@ function Card({ title, artist, genre, id, album }) {
     id: id,
     album: album,
   });
+  const dispatch = useDispatch();
 
-  const handleDelete = (id) => {
-    alert("are you sure you want to delete");
+  // const handleDelete = (id) => {
+  //   console.log(id);
 
-    axios
-      .post("https://addis-music.onrender.com/delete", {
-        id: id,
-      })
-      .then((response) => {
-        setTimeout(() => {
-          alert(response.data);
-        }, 2000);
+  //   // axios
+  //   //   .post("https://addis-music.onrender.com/delete", {
+  //   //     id: id,
+  //   //   })
+  //   //   .then((response) => {
+  //   //     setTimeout(() => {
+  //   //       alert(response.data);
+  //   //     }, 2000);
+  //   //     console.log(response.data);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err.response.data);
+  //   //   });
+  // };
 
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
-  };
   const handleEdit = (id) => {
     console.log(id);
     setEditMode(!editMode);
@@ -78,15 +81,16 @@ function Card({ title, artist, genre, id, album }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(updatedMusic, id);
-    axios
-      .post("https://addis-music.onrender.com/update", updatedMusic)
-      .then((response) => {
-        alert(response.data);
-        console.log(response.data);
-      })
-      .catch((err) => {
-        console.log(err.response.data);
-      });
+    dispatch({ type: UPDATE_MUSIC, music: updatedMusic });
+    // axios
+    //   .post("https://addis-music.onrender.com/update", updatedMusic)
+    //   .then((response) => {
+    //     alert(response.data);
+    //     console.log(response.data);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response.data);
+    //   });
     setEditMode(false);
   };
   return (
@@ -102,7 +106,10 @@ function Card({ title, artist, genre, id, album }) {
             `}
           >
             <GrEdit onClick={() => handleEdit(id)} size={20} />
-            <AiFillDelete onClick={() => handleDelete(id)} size={20} />
+            <AiFillDelete
+              onClick={() => dispatch({ type: DELETE_MUSIC, id: id })}
+              size={20}
+            />
           </div>
         )}
         {editMode ? null : <Circe />}
@@ -113,6 +120,7 @@ function Card({ title, artist, genre, id, album }) {
         >
           {editMode ? (
             <form onSubmit={handleSubmit}>
+              <Typography> Updating Music </Typography>
               <TextField
                 label="artist"
                 variant="standard"

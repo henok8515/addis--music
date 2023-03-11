@@ -1,11 +1,8 @@
-import { useSelector } from "react-redux";
 import NewMusic from "./components/NewMusic";
 
 function App() {
- 
   return (
     <div>
-
       <NewMusic />
     </div>
   );

@@ -1,63 +1,51 @@
 import React, { useEffect, useState } from "react";
 import { css } from "@emotion/css";
 import Card from "./Card";
-import axios from "axios";
-import { Button, TextField, Typography } from "@mui/material";
+import { Button, CircularProgress, TextField, Typography } from "@mui/material";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { useSelector, useDispatch } from "react-redux";
-import { getMusicFetch } from "../features/music/musicSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { CREATE_MUSIC, GET_MUSICS } from "../redux/types";
 
 function NewMusic() {
   const [creteMode, setCreateMode] = useState(false);
-  const [addMusic, setAddMusic] = useState({
+  const [newMusic, setNewMusic] = useState({
     title: "",
     artist: "",
     genre: "",
     album: "",
   });
-  const [music, setMusic] =useState([])
-
+  const dispatch = useDispatch();
+  const musics = useSelector((state) => state.musics);
   const handleChange = (e) => {
-    setAddMusic({
-      ...addMusic,
+    setNewMusic({
+      ...newMusic,
       [e.target.name]: e.target.value,
     });
   };
-  const dispatch = useDispatch();
-
-
-
   useEffect(() => {
-    axios.get('https://addis-music.onrender.com/').then((res) => {
-      setMusic(res.data)
-    } )
-  
-    dispatch(getMusicFetch());
-
+    dispatch({ type: GET_MUSICS });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [music]);
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post();
-    console.log(addMusic);
-    setAddMusic({
-      ...addMusic,
+    setNewMusic({
+      ...newMusic,
       title: "",
       artist: "",
       genre: "",
       album: "",
     });
-
-    axios
-      .post("https://addis-music.onrender.com/create", {
-        title: addMusic.title,
-        artist: addMusic.artist,
-        genre: addMusic.genre,
-        album: addMusic.album,
-      })
-      .then((res) => console.log(res.data))
-      .catch((err) => console.log(err.response.data));
+    dispatch({ type: CREATE_MUSIC, music: newMusic });
+    // axios
+    //   .post("https://addis-music.onrender.com/create", {
+    //     title: newMusic.title,
+    //     artist: newMusic.artist,
+    //     genre: newMusic.genre,
+    //     album: newMusic.album,
+    //   })
+    //   .then((res) => setMusic([...music, res.data]))
+    //   .catch((err) => console.log(err.response.data));
     setCreateMode(false);
   };
   return (
@@ -68,15 +56,19 @@ function NewMusic() {
         justify-content: center; ;
       `}
     >
-      {music.map(({ _id, ...others }) => (
-        <Card
-          setAddMusic={setAddMusic}
-          addMusic={addMusic}
-          id={_id}
-          key={_id}
-          {...others}
-        />
-      ))}
+      {musics.length === 0 ? (
+        <CircularProgress />
+      ) : (
+        musics.map(({ _id, ...others }) => (
+          <Card
+            setNewMusic={setNewMusic}
+            newMusic={newMusic}
+            id={_id}
+            key={_id}
+            {...others}
+          />
+        ))
+      )}
       <div
         className={css`
           margin: 10px 10px;
@@ -112,7 +104,7 @@ function NewMusic() {
               required
               type="text"
               placeholder="Title"
-              value={addMusic.title}
+              value={newMusic.title}
             />
             <TextField
               name="artist"
@@ -120,7 +112,7 @@ function NewMusic() {
               type="text"
               required
               placeholder="Artist"
-              value={addMusic.artist}
+              value={newMusic.artist}
             />
             <TextField
               name="album"
@@ -128,14 +120,14 @@ function NewMusic() {
               type="text"
               required
               placeholder="Album"
-              value={addMusic.album}
+              value={newMusic.album}
             />
             <TextField
               name="genre"
               onChange={handleChange}
               required
               placeholder="Genre"
-              value={addMusic.genre}
+              value={newMusic.genre}
             />
             <Button type="submit">Create</Button>
           </form>
