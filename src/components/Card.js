@@ -4,29 +4,44 @@ import styled from "@emotion/styled";
 import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 
-import { Button, TextField, Typography } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useDispatch } from "react-redux";
 import { DELETE_MUSIC, UPDATE_MUSIC } from "../redux/types";
 
 const MusicCard = styled.div`
   margin: 10px 10px;
   padding: 10px 10px;
-  width: 200px;
+  width: 210px;
+  height: 400px;
   border-radius: 10px;
   border: 1px solid black;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  padding: 10px;
+  font-size: 20px;
   flex-direction: column;
   -webkit-box-shadow: 4px -4px 4px 4px rgba(0, 0, 0, 0.1);
   -moz-box-shadow: 10px -4px 18px 4px rgba(0, 0, 0, 0.55);
   box-shadow: 5px -4px 8px 4px rgba(0, 0, 0, 0.35);
   transition: all 200ms ease-in-out;
+  text-transform: capitalize;
   &:hover {
     transform: scale(1.05);
   }
 `;
+const Form = styled.form`
+  font-size: 20px;
+  padding: 10px;
+`;
+
 const Circe = styled.div`
   height: 150px;
   width: 150px;
@@ -100,14 +115,21 @@ function Card({ title, artist, genre, id, album }) {
             className={css`
               display: flex;
               width: 100%;
+              margin: 10px;
               justify-content: space-between;
               cursor: pointer;
             `}
           >
-            <GrEdit onClick={() => handleEdit(id)} size={20} />
+            <GrEdit onClick={() => handleEdit(id)} size={25} />
             <AiFillDelete
-              onClick={() => dispatch({ type: DELETE_MUSIC, id: id })}
-              size={20}
+              onClick={() => {
+                if (window.confirm("Are you sure you want to delete this")) {
+                } else {
+                  return;
+                }
+                dispatch({ type: DELETE_MUSIC, id: id });
+              }}
+              size={25}
             />
           </div>
         )}
@@ -118,9 +140,10 @@ function Card({ title, artist, genre, id, album }) {
           `}
         >
           {editMode ? (
-            <form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit}>
               <Typography> Updating Music </Typography>
               <TextField
+                sx={{ m: 1 }}
                 label="artist"
                 variant="standard"
                 name="artist"
@@ -130,6 +153,7 @@ function Card({ title, artist, genre, id, album }) {
               />
 
               <TextField
+                sx={{ m: 1 }}
                 required
                 label="title"
                 variant="standard"
@@ -137,15 +161,34 @@ function Card({ title, artist, genre, id, album }) {
                 onChange={handleChange}
                 value={updatedMusic.title}
               />
+              <FormControl sx={{ m: 0, minWidth: 200, textAlign: "start" }}>
+                <Select
+                  sx={{ m: 1 }}
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  name="genre"
+                  required
+                  variant="standard"
+                  onChange={handleChange}
+                  value={updatedMusic.genre}
+                  fullWidth
+                >
+                  <MenuItem value="Rock">Rock</MenuItem>
+                  <MenuItem value="Pop music">Pop music</MenuItem>
+                  <MenuItem
+                    value="Jazz
+"
+                  >
+                    Jazz
+                  </MenuItem>
+                  <MenuItem value="Blues">Blues</MenuItem>
+                  <MenuItem value="Country music">Country music</MenuItem>
+                  <MenuItem value="Hip hop music">Hip hop music</MenuItem>
+                </Select>
+              </FormControl>
+
               <TextField
-                required
-                label="genre"
-                variant="standard"
-                name="genre"
-                onChange={handleChange}
-                value={updatedMusic.genre}
-              />
-              <TextField
+                sx={{ m: 1 }}
                 required
                 label="album"
                 variant="standard"
@@ -154,10 +197,17 @@ function Card({ title, artist, genre, id, album }) {
                 value={updatedMusic.album}
               />
               <Button type="submit">updateMusic</Button>
-            </form>
+            </Form>
           ) : (
-            <div>
-              <Typography>
+            <div
+              className={css`
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: start;
+              `}
+            >
+              <Typography sx={{ m: 1, fontSize: "17px" }}>
                 Name :
                 <span
                   className={css`
@@ -167,7 +217,7 @@ function Card({ title, artist, genre, id, album }) {
                   {artist}
                 </span>
               </Typography>
-              <Typography>
+              <Typography sx={{ m: 1, fontSize: "17px" }}>
                 Genre{" "}
                 <span
                   className={css`
@@ -177,7 +227,7 @@ function Card({ title, artist, genre, id, album }) {
                   {genre}
                 </span>
               </Typography>
-              <Typography>
+              <Typography sx={{ m: 1, fontSize: "17px" }}>
                 Title :
                 <span
                   className={css`
@@ -187,7 +237,7 @@ function Card({ title, artist, genre, id, album }) {
                   {title}
                 </span>
               </Typography>
-              <Typography>
+              <Typography sx={{ m: 1, fontSize: "17px" }}>
                 Album:
                 <span
                   className={css`

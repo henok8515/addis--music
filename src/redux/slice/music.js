@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const musicSlice = createSlice({
   name: "music",
   initialState: {
-    title: "",
-    artist: "",
-    album: "",
-    genre: "",
+    // title: "",
+    // artist: "",
+    // album: "",
+    // genre: "",
   },
   reducers: {
     setMusicSlice: (state, action) => {
