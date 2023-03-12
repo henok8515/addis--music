@@ -37,15 +37,7 @@ function NewMusic() {
       album: "",
     });
     dispatch({ type: CREATE_MUSIC, music: newMusic });
-    // axios
-    //   .post("https://addis-music.onrender.com/create", {
-    //     title: newMusic.title,
-    //     artist: newMusic.artist,
-    //     genre: newMusic.genre,
-    //     album: newMusic.album,
-    //   })
-    //   .then((res) => setMusic([...music, res.data]))
-    //   .catch((err) => console.log(err.response.data));
+
     setCreateMode(false);
   };
   return (

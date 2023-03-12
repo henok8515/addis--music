@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
-import axios from "axios";
+
 import { Button, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { DELETE_MUSIC, UPDATE_MUSIC } from "../redux/types";
@@ -80,7 +80,6 @@ function Card({ title, artist, genre, id, album }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(updatedMusic, id);
     dispatch({ type: UPDATE_MUSIC, music: updatedMusic });
     // axios
     //   .post("https://addis-music.onrender.com/update", updatedMusic)

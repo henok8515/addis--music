@@ -11,7 +11,6 @@ export const deleteMusic = async (id) =>
   });
 export const createMusic = async (music) => {
   axios.post("/create", music);
-  console.log(music, "api musix");
 };
 export const updateMusic = async (id, music) =>
   axios.post("/update", id, music);
