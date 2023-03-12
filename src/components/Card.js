@@ -97,9 +97,6 @@ function Card({ title, artist, genre, id, album }) {
     e.preventDefault();
     dispatch({ type: UPDATE_MUSIC, music: updatedMusic });
 
-    alert(
-      <Alert severity="success">This is a success alert — check it out!</Alert>
-    );
     // axios
     //   .post("https://addis-music.onrender.com/update", updatedMusic)
     //   .then((response) => {
