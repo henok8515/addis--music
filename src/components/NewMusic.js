@@ -56,28 +56,10 @@ function NewMusic({ query }) {
     <div
       className={css`
         display: flex;
-        flex-direction: row-reverse;
         flex-wrap: wrap;
         justify-content: center;
       `}
     >
-      {musics.length === 0 ? (
-        <CircularProgress sx={{ ml: 1 }} />
-      ) : (
-        musics
-          .filter((music) =>
-            music.title.toLowerCase().includes(query.toLowerCase())
-          )
-          .map(({ _id, ...others }) => (
-            <Card
-              setNewMusic={setNewMusic}
-              newMusic={newMusic}
-              id={_id}
-              key={_id}
-              {...others}
-            />
-          ))
-      )}
       <div
         className={css`
           margin: 10px 10px;
@@ -86,7 +68,7 @@ function NewMusic({ query }) {
           border: 1px solid black;
           display: flex;
           align-items: center;
-          justify-content: space-evenly;
+          justify-content: space-between;
           padding: 10px;
           flex-direction: column;
           -webkit-box-shadow: 4px -4px 4px 4px rgba(0, 0, 0, 0.1);
@@ -178,6 +160,30 @@ function NewMusic({ query }) {
           </div>
         )}
       </div>
+      {musics.length === 0 ? (
+        <CircularProgress sx={{ ml: 1 }} />
+      ) : (
+        musics
+          .filter((music) =>
+            music.artist.toLowerCase().includes(query.toLowerCase())
+          )
+          .map(({ _id, ...others }) => (
+            <div
+              className={css`
+                display: flex;
+                flex-direction: row-reverse;
+              `}
+            >
+              <Card
+                setNewMusic={setNewMusic}
+                newMusic={newMusic}
+                id={_id}
+                key={_id}
+                {...others}
+              />
+            </div>
+          ))
+      )}
     </div>
   );
 }

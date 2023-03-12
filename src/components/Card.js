@@ -5,9 +5,9 @@ import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 
 import {
+  Alert,
   Button,
   FormControl,
-  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -96,6 +96,10 @@ function Card({ title, artist, genre, id, album }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: UPDATE_MUSIC, music: updatedMusic });
+
+    alert(
+      <Alert severity="success">This is a success alert — check it out!</Alert>
+    );
     // axios
     //   .post("https://addis-music.onrender.com/update", updatedMusic)
     //   .then((response) => {
