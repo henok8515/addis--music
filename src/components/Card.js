@@ -5,7 +5,6 @@ import { GrEdit } from "react-icons/gr";
 import { AiFillDelete } from "react-icons/ai";
 
 import {
-  Alert,
   Button,
   FormControl,
   MenuItem,
@@ -96,7 +95,6 @@ function Card({ title, artist, genre, id, album }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch({ type: UPDATE_MUSIC, music: updatedMusic });
-
     // axios
     //   .post("https://addis-music.onrender.com/update", updatedMusic)
     //   .then((response) => {
@@ -175,7 +173,7 @@ function Card({ title, artist, genre, id, album }) {
                   fullWidth
                 >
                   <MenuItem value="Rock">Rock</MenuItem>
-                  <MenuItem value="Pop music">Pop music</MenuItem>
+                  <MenuItem value="Pop">Pop music</MenuItem>
                   <MenuItem
                     value="Jazz
 "
@@ -183,8 +181,8 @@ function Card({ title, artist, genre, id, album }) {
                     Jazz
                   </MenuItem>
                   <MenuItem value="Blues">Blues</MenuItem>
-                  <MenuItem value="Country music">Country music</MenuItem>
-                  <MenuItem value="Hip hop music">Hip hop music</MenuItem>
+                  <MenuItem value="Country">Country music</MenuItem>
+                  <MenuItem value="Hiphop">Hip hop music</MenuItem>
                 </Select>
               </FormControl>
 

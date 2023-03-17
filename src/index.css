@@ -4,6 +4,9 @@ body {
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   -moz-osx-font-smoothing: grayscale;
   /* background-image: url('./Assets/c-d-x-PDX_a_82obo-unsplash.jpg') ;
   background-size: cover; */
@@ -12,4 +15,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+hr {
+  color: black;
 }
